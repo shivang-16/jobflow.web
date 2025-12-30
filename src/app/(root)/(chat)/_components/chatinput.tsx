@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import TypewriterPlaceholder from './typewriter';
-import { Upload, Stars, Loader2 } from 'lucide-react';
+import { Upload, Stars, Loader2, MoveUp } from 'lucide-react';
 import { getUser } from '@/actions/user_actions';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/redux/hooks';
@@ -155,13 +155,13 @@ const ChatInput = ({ isLoggedIn, onSubmit, setShowResumePopup }: {
       <div className="w-full mx-auto z-10 px-4 animate-fade-in">
         {/* Form Container */}
         <form onSubmit={handleFormSubmit} className="w-full">
-          <div className="relative shadow-sm border border-[#ffffff1a] bg-[#171717cc] backdrop-blur rounded-lg p-4 transition-all duration-300 hover:border-[#ffffff33]">
+          <div className="relative shadow-sm bg-[hsla(0,0%,60%,0.12)] backdrop-blur rounded-[20px] p-4 transition-all duration-300">
             <div className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
-              <svg className="absolute bottom-0 right-0 w-full h-full">
+              <svg className="absolute bottom-0 rounded-[20px] right-0 w-full h-full">
                 <defs>
-                  <linearGradient id="line-gradient" x1="70%" y1="70%" x2="100%" y2="100%">
+                  <linearGradient id="line-gradient" x1="50%" y1="70%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#53ffe9d9" stopOpacity="0%" />
-                    <stop offset="40%" stopColor="#53ffe9d9" stopOpacity="80%" />
+                    <stop offset="40%" stopColor="#53ffe9d9" stopOpacity="60%" />
                     <stop offset="50%" stopColor="#53ffe9d9" stopOpacity="80%" />
                     <stop offset="100%" stopColor="#53ffe9d9" stopOpacity="0%" />
                   </linearGradient>
@@ -205,28 +205,14 @@ const ChatInput = ({ isLoggedIn, onSubmit, setShowResumePopup }: {
             {/* Action Buttons */}
             <div className="flex justify-between text-sm pt-2">
               <div className="flex gap-2 items-center">
-                <button 
-                  className="flex items-center text-gray-400 hover:text-[#53ffe9d9] rounded-md p-1 transition-colors duration-200"
-                  onClick={() => {/* Handle upload */}}
-                  type="button"
-                >
-                  <Upload className="text-xl" />
-                </button>
-                <button 
-                  className="flex items-center text-gray-400 opacity-30 cursor-not-allowed rounded-md p-1"
-                  type="button"
-                  disabled
-                >
-                  <Stars className="text-xl" />
-                </button>
               </div>
               <button
-                className="px-4 py-1 bg-[#53ffe9d9] text-black font-medium rounded-md hover:bg-[#53ffe9] transition-colors"
+                className="px-4 py-1 text-gray-700 font-medium rounded-md hover:bg-[#53ffe9] transition-colors"
                 type="button"
                 disabled={isLoading}
                 onClick={handleSubmit}
               >
-                {isLoading ? <Loader2 className="animate-spin" /> : 'Send'}
+                {isLoading ? <Loader2 className="animate-spin" /> : <MoveUp className="w-6 h-6"/>}
               </button>
             </div>
           </div>

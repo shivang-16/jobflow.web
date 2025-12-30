@@ -84,90 +84,89 @@ const JobSearchResults = ({ query, onClose, apiData, isLoading = false }: JobSea
             <p className="text-gray-400 text-sm mt-2 line-clamp-2">{job.job_description}</p>
 
             {/* Match Analysis Section */}
-            <div className="mt-4 bg-zinc-800/50 rounded-lg p-4 ">
-              {/* Match Score Circle */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-4">
-                  <div className="relative w-16 h-16">
-                    <svg className="w-full h-full transform -rotate-90">
-                      <circle
-                        cx="32"
-                        cy="32"
-                        r="28"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        fill="transparent"
-                        className="text-zinc-700"
-                      />
-                      <circle
-                        cx="32"
-                        cy="32"
-                        r="28"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        fill="transparent"
-                        strokeDasharray={`${2 * Math.PI * 28}`}
-                        strokeDashoffset={`${2 * Math.PI * 28 * (1 - job.match_analysis.match_percentage / 100)}`}
-                        className="text-[#53ffe9]"
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-lg font-bold text-[#53ffe9]">
-                        {job.match_analysis.match_percentage}%
-                      </span>
+            {job.match_analysis && typeof job.match_analysis.match_percentage === 'number' ? (
+              <div className="mt-4 bg-zinc-800/50 rounded-lg p-4 ">
+                {/* Match Score Circle */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="relative w-16 h-16">
+                      <svg className="w-full h-full transform -rotate-90">
+                        <circle
+                          cx="32"
+                          cy="32"
+                          r="28"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="transparent"
+                          className="text-zinc-700"
+                        />
+                        <circle
+                          cx="32"
+                          cy="32"
+                          r="28"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="transparent"
+                          strokeDasharray={`${2 * Math.PI * 28}`}
+                          strokeDashoffset={`${2 * Math.PI * 28 * (1 - job.match_analysis.match_percentage / 100)}`}
+                          className="text-[#53ffe9]"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-lg font-bold text-[#53ffe9]">
+                          {job.match_analysis.match_percentage}%
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-white">Match Score</h4>
+                      <div className="flex items-center mt-1">
+                        <span className="text-sm text-gray-400 mr-2">Experience Match</span>
+                        {job.match_analysis.experience_match ? 
+                          <CheckCircle className="text-green-500" size={16} /> : 
+                          <XCircle className="text-red-500" size={16} />
+                        }
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-medium text-white">Match Score</h4>
-                    <div className="flex items-center mt-1">
-                      <span className="text-sm text-gray-400 mr-2">Experience Match</span>
-                      {job.match_analysis.experience_match ? 
-                        <CheckCircle className="text-green-500" size={16} /> : 
-                        <XCircle className="text-red-500" size={16} />
-                      }
+                </div>
+                {/* Skills Analysis */}
+                <div className="space-y-3">
+                  <div className="bg-zinc-700/50 rounded-lg p-3">
+                    <h5 className="text-sm font-medium text-white mb-2">Skills Match</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {job.match_analysis.matched_skills.map((skill: string, index: number) => (
+                        <span 
+                          key={index} 
+                          className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs flex items-center"
+                        >
+                          <CheckCircle size={12} className="mr-1" />
+                          {skill}
+                        </span>
+                      ))}
                     </div>
+                  </div>
+                  <div className="bg-zinc-700/50 rounded-lg p-3">
+                    <h5 className="text-sm font-medium text-white mb-2">Missing Skills</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {job.match_analysis.missing_skills.map((skill: string, index: number) => (
+                        <span 
+                          key={index} 
+                          className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-xs flex items-center"
+                        >
+                          <XCircle size={12} className="mr-1" />
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="bg-zinc-700/50 rounded-lg p-3">
+                    <h5 className="text-sm font-medium text-white mb-2">Analysis</h5>
+                    <p className="text-sm text-gray-400">{job.match_analysis.analysis}</p>
                   </div>
                 </div>
               </div>
-
-              {/* Skills Analysis */}
-              <div className="space-y-3">
-                <div className="bg-zinc-700/50 rounded-lg p-3">
-                  <h5 className="text-sm font-medium text-white mb-2">Skills Match</h5>
-                  <div className="flex flex-wrap gap-2">
-                    {job.match_analysis.matched_skills.map((skill: string, index: number) => (
-                      <span 
-                        key={index} 
-                        className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs flex items-center"
-                      >
-                        <CheckCircle size={12} className="mr-1" />
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-zinc-700/50 rounded-lg p-3">
-                  <h5 className="text-sm font-medium text-white mb-2">Missing Skills</h5>
-                  <div className="flex flex-wrap gap-2">
-                    {job.match_analysis.missing_skills.map((skill: string, index: number) => (
-                      <span 
-                        key={index} 
-                        className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-xs flex items-center"
-                      >
-                        <XCircle size={12} className="mr-1" />
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-zinc-700/50 rounded-lg p-3">
-                  <h5 className="text-sm font-medium text-white mb-2">Analysis</h5>
-                  <p className="text-sm text-gray-400">{job.match_analysis.analysis}</p>
-                </div>
-              </div>
-            </div>
+            ) : null}
 
             <div className="flex justify-end items-center mt-3">
               <a 
