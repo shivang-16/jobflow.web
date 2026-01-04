@@ -25,9 +25,9 @@ export default async function RootLayout({
   // await scrapeAndCreateJobs()
   return (
     <html lang="en">
-       <StoreProvider
+       {/* <StoreProvider
           user={user?.user}
-        >
+        > */}
           <GoogleOAuthProvider
             clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
           >
@@ -39,7 +39,7 @@ export default async function RootLayout({
           {children}
           </body>
         </GoogleOAuthProvider>
-       </StoreProvider> 
+       {/* </StoreProvider>  */}
     </html>
   );
 }
